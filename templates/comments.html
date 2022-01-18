@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ topic_name }}</title>
+    <title>{{ topic.name }}</title>
 </head>
 <body>
-<h1>{{ topic_name }}</h1>
-{% for foobar in comment_list %}
-    <li>{{ foobar.text }}</li>
+<h1>{{ topic.name }}</h1>
+{% for comment in comment_list %}
+    <li>{{ comment.text }}</li>
 {% endfor %}
 <br>
 <br>

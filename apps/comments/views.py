@@ -1,19 +1,17 @@
-from django.template.loader import get_template
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
 
-from apps.categories.models import Category, Topic
+from apps.categories.models import Topic
 from apps.comments.models import Comment
 
 
 def comments(request, **kwargs):
     category_id = kwargs.get('cat_id')
     topic_id = kwargs.get('id')
-    template = get_template('comments.html')
+    topic = Topic.objects.get(id=topic_id, category=category_id)
     context = {
-        'topic_name': Topic.objects.get(id=topic_id, category=category_id).name,
+        'topic': topic,
         'comment_list': (Comment.objects
-                         .filter(topic=topic_id,
-                                 topic__category=category_id)
+                         .filter(topic=topic_id)
                          .order_by('create_at')),
     }
-    return HttpResponse(template.render(context=context))
+    return render(request, 'comments.html', context=context)
