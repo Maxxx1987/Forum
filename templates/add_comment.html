@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Добавить комментарий</title>
+    </head>
+    <body>
+        <form action="/category/{{ category_id }}/topic/{{ topic_id }}/comment/add/" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <br>
+            <input type="submit" name="Отправить">
+        </form>
+    </body>
+</html>

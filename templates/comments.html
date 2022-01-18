@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ topic.name }}</title>
-</head>
-<body>
-<h1>{{ topic.name }}</h1>
-{% for comment in comment_list %}
-    <li>{{ comment.text }}</li>
-{% endfor %}
-<br>
-<br>
-<a href="/">Главная</a>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ topic.name }}</title>
+    </head>
+    <body>
+        <h1>{{ topic.name }}</h1>
+
+        {% for comment in comment_list %}
+            <li>{{ comment.text }} <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/{{ comment.id }}/">перейти</a></li>
+        {% endfor %}
+        <br>
+        <br>
+        <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/add/">Добавить комментарий</a>
+        <br>
+        <br>
+        <a href="/">Главная</a>
+    </body>
 </html>

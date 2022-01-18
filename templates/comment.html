@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{{ comment.text }} (лайков {{ like_count }})
+<form action="/category/{{ comment.topic.category_id }}/topic/{{ comment.topic_id }}/comment/{{ comment.id }}/like/add/" method="POST">
+    {% csrf_token %}
+    {{ like_form }}
+    <button type="submit" value="submit">Лайкнуть</button>
+</form>
+<br>
+<br>
+{{ comment.create_at }}
+</body>
+</html>
