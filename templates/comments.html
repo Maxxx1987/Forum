@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ topic_name }}</title>
+</head>
+<body>
+<h1>{{ topic_name }}</h1>
+{% for foobar in comment_list %}
+    <li>{{ foobar.text }}</li>
+{% endfor %}
+<br>
+<br>
+<a href="/">Главная</a>
+</body>
+</html>
