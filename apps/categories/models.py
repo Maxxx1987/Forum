@@ -10,6 +10,7 @@ class Category(models.Model):
 
 class Topic(models.Model):
     name = models.CharField('Название', max_length=255)
+    description = models.TextField(null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)

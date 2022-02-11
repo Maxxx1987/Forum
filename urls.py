@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 
 from apps.comments.views import comments, add_comment, comment
-from apps.categories.views import categories, topics
+from apps.categories.views import categories, topics, add_topic
 from apps.likes.views import add_like
 
 
@@ -25,10 +25,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', categories),
     re_path(r'^category/(?P<id>\d+)/$', topics),
+    re_path(r'^category/(?P<id>\d+)/topic/add/$', add_topic),
     re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<id>\d+)/$', comments),
 
     re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<id>\w+)/comment/add/$', add_comment),
     re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<topic_id>\w+)/comment/(?P<id>\w+)/$', comment),
-    re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<topic_id>\d+)/comment/(?P<id>\d+)/like/add/$', add_like)
+    re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<topic_id>\d+)/comment/(?P<id>\d+)/like/add/$', add_like),
+
 
 ]
