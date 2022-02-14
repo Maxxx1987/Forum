@@ -1,5 +1,13 @@
 from django import forms
 
+from apps.comments.models import Comment
 
-class AddCommentForm(forms.Form):
-    comment = forms.CharField(widget=forms.Textarea())
+
+class AddCommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('topic', 'text')
+        widgets = {
+            'topic': forms.HiddenInput(),
+        }

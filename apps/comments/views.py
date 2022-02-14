@@ -1,57 +1,58 @@
-from django.shortcuts import render, redirect
-
 from apps.categories.models import Topic
 from apps.comments.models import Comment
 from apps.comments.forms import AddCommentForm
 from apps.likes.forms import AddLikeForm
 from apps.likes.models import Like
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.detail import DetailView
 
 
-def comments(request, **kwargs):
-    category_id = kwargs.get('cat_id')
-    topic_id = kwargs.get('id')
-    topic = Topic.objects.get(id=topic_id, category=category_id)
-    context = {
-        'topic': topic,
-        'comment_list': (Comment.objects
-                         .filter(topic=topic_id)
-                         .order_by('create_at')),
-    }
-    return render(request, 'comments.html', context=context)
+class CommentListView(ListView):
+    model = Comment
+    ordering = ('-create_at',)
+    template_name = 'comments.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(topic_id=self.kwargs['id'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['topic'] = Topic.objects.get(id=int(self.kwargs['id']))
+        return context
 
 
-def add_comment(request, **kwargs):
-    category_id = kwargs.get('cat_id')
-    topic_id = kwargs.get('id')
+class CommentCreateView(CreateView):
+    form_class = AddCommentForm
+    template_name = 'add_comment.html'
 
-    if request.method == 'POST':
-        # создание коммента
-        comment_form = AddCommentForm(request.POST)
-        if comment_form.is_valid():
-            comment = comment_form.cleaned_data['comment']
-            Comment.objects.create(user=request.user, topic_id=int(topic_id), text=comment)
-            return redirect(f'/category/{category_id}/topic/{topic_id}/')
-        else:
-            pass
+    def get_initial(self):
+        return {'topic': self.kwargs['id']}
 
-    comment_form = AddCommentForm()
-    context = {
-        'category_id': category_id,
-        'topic_id': topic_id,
-        'form': comment_form,
-    }
-    return render(request, 'add_comment.html', context=context)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['topic'] = Topic.objects.get(id=int(self.kwargs['id']))
+        return context
 
 
-def comment(request, **kwargs):
-    # category_id = kwargs.get('cat_id')
-    # topic_id = kwargs.get('topic_id')
-    comment_id = kwargs.get('id')
-    # topic = Topic.objects.get(id=topic_id, category=category_id)
-    context = {
-        # 'topic': topic,
-        'comment': Comment.objects.get(id=comment_id),
-        'like_count': Like.objects.filter(comment_id=comment_id).count(),
-        'like_form': AddLikeForm(),
-    }
-    return render(request, 'comment.html', context=context)
+class CommentDetailView(DetailView):
+    model = Comment
+    pk_url_kwarg = 'id'
+    template_name = 'comment.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['like_count'] = Like.objects.filter(comment_id=self.object.id).count()
+        context['like_form'] = AddLikeForm()
+        return context
+
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    pk_url_kwarg = 'id'
+    success_url = '/'

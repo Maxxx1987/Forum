@@ -14,5 +14,10 @@
 <br>
 <br>
 {{ comment.create_at }}
+<br>
+<form action="/category/{{ comment.topic.category_id }}/topic/{{ comment.topic_id }}/comment/{{ comment.id }}/delete/" method="POST">
+    {% csrf_token %}
+    <button type="submit" value="submit">Удалить</button>
+</form>
 </body>
 </html>

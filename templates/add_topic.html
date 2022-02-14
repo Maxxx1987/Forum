@@ -5,7 +5,7 @@
     <title>Добавить тему</title>
 </head>
 <body>
-<form action="/category/{{ cat_id }}/topic/add/" method="post">
+<form action="/category/{{ view.kwargs.id }}/topic/add/" method="post">
     {% csrf_token %}
     {{ form }}
     <br>

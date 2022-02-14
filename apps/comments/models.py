@@ -9,3 +9,6 @@ class Comment(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.PROTECT)
     text = models.TextField()
     create_at = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return f'/category/{self.topic.category_id}/topic/{self.topic_id}/'

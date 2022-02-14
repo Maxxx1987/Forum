@@ -5,7 +5,7 @@
         <title>Добавить комментарий</title>
     </head>
     <body>
-        <form action="/category/{{ category_id }}/topic/{{ topic_id }}/comment/add/" method="POST">
+        <form action="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/add/" method="POST">
             {% csrf_token %}
             {{ form }}
             <br>

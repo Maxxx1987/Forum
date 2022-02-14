@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ category_name }}</title>
+    <title>{{ category.name }}</title>
 </head>
 <body>
-<h1>{{ category_name }}</h1>
+<h1>{{ category.name }}</h1>
 {% for foobar in topic_list %}
     <li>
-        <a href="/category/{{ category_id }}/topic/{{ foobar.id }}/">{{ foobar.name }}</a>
+        <a href="/category/{{ category.id }}/topic/{{ foobar.id }}/">{{ foobar.name }}</a>
         {% if foobar.description %}({{ foobar.description }}){% endif %}
     </li>
 {% endfor %}
 <br>
-<a href="/category/{{ category_id }}/topic/add/">Добавить тему</a>
+<a href="/category/{{ category.id }}/topic/add/">Добавить тему</a>
 <br>
 <a href="/">Главная</a>
 </body>
