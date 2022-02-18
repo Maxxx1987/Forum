@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Главная страница</title>
-</head>
-<body>
-{% for foobar in category_list %}
-    <li><a href="/category/{{ foobar.slug }}/">{{ foobar.name }}</a></li>
-{% endfor %}
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Главная страница</title>
+    </head>
+    <body>
+    <ul>
+    {% for category in category_list %}
+        <li><a href="/category/{{ category.slug }}/">{{ category.name }}</a></li>
+    {% endfor %}
+    </ul>
+    </body>
 </html>

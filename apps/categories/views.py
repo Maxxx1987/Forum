@@ -5,7 +5,7 @@ from apps.categories.models import Category, Topic
 from apps.categories.forms import AddTopicForm
 
 
-class CategoryView(ListView):
+class CategoryListView(ListView):
     model = Category
     ordering = ('name',)
     template_name = 'categories.html'
@@ -26,9 +26,8 @@ class TopicListView(ListView):
         return context
 
 
-class AddTopicView(CreateView):
+class TopicCreateView(CreateView):
     form_class = AddTopicForm
-    success_url = '/category/{category_id}/'
     template_name = 'add_topic.html'
 
     def get_success_url(self):

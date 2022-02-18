@@ -11,5 +11,10 @@ class Comment(models.Model):
     text = models.TextField(validators=[MinLengthValidator(3)])
     create_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        if len(self.text) > 50:
+            return f'{self.text[:47]}...'
+        return self.text
+
     def get_absolute_url(self):
         return f'/category/{self.topic.category_id}/topic/{self.topic_id}/comment/{self.id}/'

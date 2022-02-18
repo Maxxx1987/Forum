@@ -13,6 +13,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return f'/category/{self.slug}/'
+
 
 class Topic(models.Model):
     name = models.CharField('Название', max_length=255)

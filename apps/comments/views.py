@@ -55,4 +55,6 @@ class CommentDetailView(DetailView):
 class CommentDeleteView(DeleteView):
     model = Comment
     pk_url_kwarg = 'id'
-    success_url = '/'
+
+    def get_success_url(self):
+        return self.object.topic.get_absolute_url()

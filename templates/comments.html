@@ -6,10 +6,12 @@
     </head>
     <body>
         <h1>{{ topic.name }}</h1>
-
+        <h5>{{ topic.description }}</h5>
+        <ul>
         {% for comment in comment_list %}
             <li>{{ comment.text }} <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/{{ comment.id }}/">перейти</a></li>
         {% endfor %}
+        </ul>
         <br>
         <br>
         <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/add/">Добавить комментарий</a>

@@ -130,4 +130,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# third party apps
 AUTOSLUG_SLUGIFY_FUNCTION = 'apps.utils.slugify.slugify'
