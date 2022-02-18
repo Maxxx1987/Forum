@@ -48,7 +48,7 @@ class CommentDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['like_count'] = Like.objects.filter(comment_id=self.object.id).count()
-        context['like_form'] = AddLikeForm()
+        context['like_form'] = AddLikeForm(initial={'comment': self.kwargs['id']})
         return context
 
 

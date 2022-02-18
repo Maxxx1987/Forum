@@ -6,7 +6,7 @@
 </head>
 <body>
 {% for foobar in category_list %}
-    <li><a href="/category/{{ foobar.id }}/">{{ foobar.name }}</a></li>
+    <li><a href="/category/{{ foobar.slug }}/">{{ foobar.name }}</a></li>
 {% endfor %}
 </body>
 </html>

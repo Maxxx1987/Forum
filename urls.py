@@ -17,14 +17,14 @@ from django.contrib import admin
 from django.urls import path, re_path
 
 from apps.comments.views import CommentCreateView, CommentListView, CommentDetailView, CommentDeleteView
-from apps.categories.views import CategoryView, AddTopicView, TopicView
-from apps.likes.views import add_like
+from apps.categories.views import CategoryView, AddTopicView, TopicListView
+from apps.likes.views import LikeCreateView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', CategoryView.as_view()),
-    re_path(r'^category/(?P<id>\d+)/$', TopicView.as_view()),
+    re_path(r'^category/(?P<slug>\w+)/$', TopicListView.as_view()),
     re_path(r'^category/(?P<id>\d+)/topic/add/$', AddTopicView.as_view()),
     re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<id>\d+)/$', CommentListView.as_view()),
 
@@ -34,7 +34,8 @@ urlpatterns = [
         r'^category/(?P<cat_id>\d+)/topic/(?P<topic_id>\w+)/comment/(?P<id>\w+)/delete/$',
         CommentDeleteView.as_view()
     ),
-    re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<topic_id>\d+)/comment/(?P<id>\d+)/like/add/$', add_like),
-
-
+    re_path(
+        r'^category/(?P<cat_id>\d+)/topic/(?P<topic_id>\d+)/comment/(?P<id>\d+)/like/add/$',
+        LikeCreateView.as_view()
+    ),
 ]

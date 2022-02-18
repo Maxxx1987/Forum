@@ -11,18 +11,18 @@ class CategoryView(ListView):
     template_name = 'categories.html'
 
 
-class TopicView(ListView):
+class TopicListView(ListView):
     model = Topic
     ordering = ('-created_at', '-id')
     template_name = 'topics.html'
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(category_id=self.kwargs['id'])
+        return qs.filter(category__slug=self.kwargs['slug'])
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
-        context['category'] = Category.objects.get(id=int(self.kwargs['id']))
+        context['category'] = Category.objects.get(slug=self.kwargs['slug'])
         return context
 
 
@@ -30,6 +30,9 @@ class AddTopicView(CreateView):
     form_class = AddTopicForm
     success_url = '/category/{category_id}/'
     template_name = 'add_topic.html'
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
 
     def form_valid(self, form):
         form.instance.user = self.request.user
