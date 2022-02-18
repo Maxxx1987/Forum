@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ comment.text }}
+    <br>
+    (лайков {{ like_count }})
+    <form action="/category/{{ comment.topic.category_id }}/topic/{{ comment.topic_id }}/comment/{{ comment.id }}/like/add/" method="POST">
+        {% csrf_token %}
+        {{ like_form }}
+        <button type="submit" value="submit">Лайкнуть</button>
+    </form>
+    <br>
+    <br>
+    {{ comment.create_at }}
+    <br>
+    <form action="/category/{{ comment.topic.category_id }}/topic/{{ comment.topic_id }}/comment/{{ comment.id }}/delete/" method="POST">
+        {% csrf_token %}
+        <button type="submit" value="submit">Удалить</button>
+    </form>
+    <br>
+{% endblock %}

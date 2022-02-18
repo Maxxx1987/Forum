@@ -14,30 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, include
 
-from apps.comments.views import CommentCreateView, CommentListView, CommentDetailView, CommentDeleteView
-from apps.categories.views import CategoryListView, TopicCreateView, TopicListView
-from apps.likes.views import LikeCreateView
+from apps.categories.views import IndexView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', CategoryListView.as_view()),
 
-    re_path(r'^category/(?P<slug>\w+)/$', TopicListView.as_view()),
-    re_path(r'^category/(?P<id>\d+)/topic/add/$', TopicCreateView.as_view()),
-
-    re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<id>\d+)/$', CommentListView.as_view()),
-    re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<id>\w+)/comment/add/$', CommentCreateView.as_view()),
-    re_path(r'^category/(?P<cat_id>\d+)/topic/(?P<topic_id>\w+)/comment/(?P<id>\w+)/$', CommentDetailView.as_view()),
-    re_path(
-        r'^category/(?P<cat_id>\d+)/topic/(?P<topic_id>\w+)/comment/(?P<id>\w+)/delete/$',
-        CommentDeleteView.as_view()
-    ),
-
-    re_path(
-        r'^category/(?P<cat_id>\d+)/topic/(?P<topic_id>\d+)/comment/(?P<id>\d+)/like/add/$',
-        LikeCreateView.as_view()
-    ),
+    path('', IndexView.as_view()),
+    path('category/', include('apps.categories.urls')),
 ]

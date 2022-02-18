@@ -4,14 +4,13 @@ from apps.comments.forms import AddCommentForm
 from apps.likes.forms import AddLikeForm
 from apps.likes.models import Like
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.detail import DetailView
 
 
 class CommentListView(ListView):
     model = Comment
     ordering = ('-create_at',)
-    template_name = 'comments.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -20,6 +19,17 @@ class CommentListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['topic'] = Topic.objects.get(id=int(self.kwargs['id']))
+        return context
+
+
+class CommentDetailView(DetailView):
+    model = Comment
+    pk_url_kwarg = 'id'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['like_count'] = Like.objects.filter(comment_id=self.object.id).count()
+        context['like_form'] = AddLikeForm(initial={'comment': self.kwargs['id']})
         return context
 
 
@@ -40,16 +50,10 @@ class CommentCreateView(CreateView):
         return context
 
 
-class CommentDetailView(DetailView):
+class CommentUpdateView(UpdateView):
+    form_class = AddCommentForm
     model = Comment
     pk_url_kwarg = 'id'
-    template_name = 'comment.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['like_count'] = Like.objects.filter(comment_id=self.object.id).count()
-        context['like_form'] = AddLikeForm(initial={'comment': self.kwargs['id']})
-        return context
 
 
 class CommentDeleteView(DeleteView):

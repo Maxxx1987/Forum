@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <ul>
+    {% for category_obj in data %}
+        <li><a href="/category/{{ category_obj.category.slug }}/">{{ category_obj.category.name }}</a></li>
+        <ul>
+        {% for topic in category_obj.topic_list %}
+            <li>
+                <a href="/category/{{ topic.category.id }}/topic/{{ topic.id }}/">{{ topic.name }}</a> ({{ topic.like_count }})
+                {% if topic.description %}({{ topic.description }}){% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+    </ul>
+
+
+{% endblock %}
+
+
+
+

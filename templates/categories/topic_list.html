@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for topic in topic_list %}
+            <li>
+                <a href="/category/{{ category.id }}/topic/{{ topic.id }}/">{{ topic.name }}</a>
+                {% if topic.description %}({{ topic.description }}){% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% include "pagination.html" %}
+    <br>
+    <a href="/category/{{ category.id }}/topic/add/">Добавить тему</a>
+{% endblock %}

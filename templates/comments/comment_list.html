@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ topic.name }}{% endblock %}
+
+{% block content %}
+    {% if topic.description %}<h5>{{ topic.description }}</h5>{% endif %}
+    <ul>
+    {% for comment in comment_list %}
+        <li>
+            {{ comment.text }}
+            <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/{{ comment.id }}/">перейти</a>
+            <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/{{ comment.id }}/update/">изменить</a>
+        </li>
+    {% endfor %}
+    </ul>
+    <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/add/">Добавить</a>
+{% endblock %}
+
+
+
+

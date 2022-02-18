@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+    {% for category in category_list %}
+        <li><a href="/category/{{ category.slug }}/">{{ category.name }}</a></li>
+    {% endfor %}
+    </ul>
+    {% include "pagination.html" %}
+{% endblock %}

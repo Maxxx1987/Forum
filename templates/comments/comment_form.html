@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{{ object.get_absolute_url }}update/" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <br>
+    <input type="submit" name="Отправить">
+</form>
+{% endblock %}
