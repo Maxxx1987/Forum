@@ -9,7 +9,7 @@
         <li>
             {{ comment.text }}
             <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/{{ comment.id }}/">перейти</a>
-            <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/{{ comment.id }}/update/">изменить</a>
+            <a href="{{ comment.get_absolute_url }}/update/">изменить</a>
         </li>
     {% endfor %}
     </ul>
