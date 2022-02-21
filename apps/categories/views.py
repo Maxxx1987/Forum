@@ -51,8 +51,9 @@ class TopicListView(ListView):
 
 
 class TopicCreateView(CreateView):
+    model = Topic
     form_class = AddTopicForm
-    template_name = 'add_topic.html'
+    template_name_suffix = '_create'
 
     def get_success_url(self):
         return self.object.get_absolute_url()
