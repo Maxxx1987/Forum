@@ -8,8 +8,8 @@
     {% for comment in comment_list %}
         <li>
             {{ comment.text }}
-            <a href="/category/{{ topic.category_id }}/topic/{{ topic.id }}/comment/{{ comment.id }}/">перейти</a>
-            <a href="{{ comment.get_absolute_url }}/update/">изменить</a>
+            <a href="{{ comment.get_absolute_url }}">перейти</a>
+            <a href="{{ comment.get_absolute_url }}update/">изменить</a>
         </li>
     {% endfor %}
     </ul>
