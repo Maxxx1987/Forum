@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить тему{% endblock %}
+
+{% block content %}
+    <form action="/category/{{ view.kwargs.id }}/topic/add/" method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+{#        <input type="hidden" name="{{ form.topic.html_name }}" id="{{ form.topic.id_for_label }}" value="{{ form.topic.value }}">#}
+        <div class="mb-3">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+            <input type="text" name="{{ form.name.html_name }}" maxlength="255" required="" id="{{ form.name.id_for_label }}" class="form-control" value="{% if form.name.value %}{{ form.name.value }}{% endif %}">
+        </div>
+        <div class="mb-3">
+            {{ form.description.errors }}
+            <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+            <textarea name="{{ form.description.html_name }}" cols="40" rows="5" required="" id="{{ form.description.id_for_label }}" class="form-control">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+{% endblock %}

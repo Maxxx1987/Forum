@@ -34,8 +34,9 @@ class CommentDetailView(DetailView):
 
 
 class CommentCreateView(CreateView):
+    model = Comment
     form_class = AddCommentForm
-    template_name = 'add_comment.html'
+    template_name_suffix = '_create'
 
     def get_initial(self):
         return {'topic': self.kwargs['id']}
